@@ -3,11 +3,56 @@
 <head>
   <meta charset="utf-8">
   <title>FantasyUmpire</title>
+
+  <script src="http://cdn.dashjs.org/latest/dash.all.min.js"></script>
+
+  <!-- <script class="code">
+
+    function getUrlVars() {
+        var vars = {};
+        window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+
+    function init() {
+        var video,
+            player;
+        var urlParameter = getUrlVars();
+        var item = {
+            url: 'https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd',
+            autoplay: true
+        }
+
+        if (urlParameter) {
+            if (urlParameter.hasOwnProperty('url')) {
+                item.url = urlParameter.url;
+            }
+            if (urlParameter.hasOwnProperty('autoplay')) {
+                item.autoplay = (urlParameter.autoplay === 'true');
+            }
+        }
+
+        video = document.querySelector('video');
+        player = dashjs.MediaPlayer().create();
+        player.initialize(video, item.url, item.autoplay);
+    }
+</script> -->
+
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
+<body class="mat-typography" style="background-color: #f0f0f0">
   <app-root></app-root>
+  <!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        init();
+    });
+</script> -->
 </body>
 </html>

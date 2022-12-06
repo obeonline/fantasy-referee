@@ -1,0 +1,16 @@
+<!-- Cards with media area -->
+<div *ngFor="let replay of replays.Items" style="padding-bottom: 15px;">
+<mat-card mat-elevation-z8>
+    <mat-card-header>
+    <mat-card-title-group>
+        <mat-card-title>{{replay.title}}</mat-card-title>
+        <mat-card-subtitle>Small</mat-card-subtitle>
+        <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+    </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content style="text-align: center;">
+        <div style="padding-bottom: 10px; text-align: left;">{{replay.description}}</div>
+        <div><button mat-raised-button color="primary" style="width: 95%;" [routerLink]="['/replays', replay.videoId]">Vote</button></div>  
+    </mat-card-content>
+</mat-card>
+</div>
