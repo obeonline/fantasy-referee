@@ -25,12 +25,15 @@ export class ListReplaysComponent {
 
       },
       error: (e) => console.error(e)
-    }
-
-    )
+    })
+    
   }
 
   getVideos() {
     return this.http.get("https://lzj2wvtri3.execute-api.us-east-2.amazonaws.com/replays");
+  }
+
+  getVote(videoId: string, userId: string | null) {
+    return this.http.get("https://lzj2wvtri3.execute-api.us-east-2.amazonaws.com/replays/852b2437-86c9-4684-86ea-2d76e468cde6/votes/123456");
   }
 }

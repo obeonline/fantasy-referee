@@ -1,9 +1,20 @@
-<!-- <div>
-    <video data-dashjs-player autoplay src="https://d26ohwpktuh73o.cloudfront.net/replays/first-replay/nfl.mpd" controls></video>
-
-
-</div> -->
-<video controls="true"></video>
+<mat-card class="example-card">
+    <mat-card-header style="padding-bottom: 10px;">
+        <mat-card-title>{{ replay.Item.title }}</mat-card-title>
+        <mat-card-subtitle>{{ replay.Item.gameInfo }}</mat-card-subtitle>
+    </mat-card-header>
+    <video controls="true"></video>
+    <mat-card-content>
+        <p style="padding-top: 10px;">
+            {{ replay.Item.description }}
+        </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" mat-button style="background-color: green;">CONFIRM CALL</button>
+        &nbsp;
+        <button mat-raised-button color="primary" mat-button style="background-color:firebrick;">OVERTURN CALL</button>
+    </mat-card-actions>
+</mat-card>
 
 
 

@@ -21,17 +21,17 @@ export class ShowReplayComponent implements OnInit {
 
   ngOnInit() {
 
-    var route_id = "";
+    var routeId = "";
 
     this.route.params.subscribe(params => {
-      route_id = params['id'];
+      routeId = params['id'];
     });
 
     
 
-    console.log("route-id: " + route_id);
+    console.log("routeId: " + routeId);
 
-    this.getVideo(route_id).subscribe({
+    this.getVideo(routeId).subscribe({
       next: (response) => {
         
         this.replay = response;

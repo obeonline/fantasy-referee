@@ -11,4 +11,10 @@ import { catchError, retry } from 'rxjs/operators';
 })
 
 
-export class AppComponent {}    
+export class AppComponent {
+
+  ngOnInit() {
+    const user = localStorage.getItem('currentUser');
+    console.log("Current User: ", user)
+  }
+}    
