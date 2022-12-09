@@ -13,12 +13,14 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { ListReplaysComponent } from './list-replays/list-replays.component';
 import { ShowReplayComponent } from './show-replay/show-replay.component';
+import { ReplayVoteStatsComponent } from './replay-vote-stats/replay-vote-stats.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListReplaysComponent,
-    ShowReplayComponent
+    ShowReplayComponent,
+    ReplayVoteStatsComponent
   ],
   imports: [
     BrowserModule,

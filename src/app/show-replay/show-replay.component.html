@@ -10,9 +10,14 @@
         </p>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button color="primary" mat-button style="background-color: green;">CONFIRM CALL</button>
-        &nbsp;
-        <button mat-raised-button color="primary" mat-button style="background-color:firebrick;">OVERTURN CALL</button>
+        <div  *ngIf="replay.Item.overturn == null">
+            <button mat-raised-button color="primary" mat-button style="background-color: green;" (click)="vote(false)">CONFIRM CALL</button>
+            &nbsp;
+            <button mat-raised-button color="primary" mat-button style="background-color:firebrick;" (click)="vote(true)">OVERTURN CALL</button>
+        </div>
+        <div  *ngIf="replay.Item.overturn != null">
+            <replay-vote-stats></replay-vote-stats>
+        </div>
     </mat-card-actions>
 </mat-card>
 

@@ -1,0 +1,7 @@
+  {
+    "/api": {
+      "target": "https://lzj2wvtri3.execute-api.us-east-2.amazonaws.com",
+      "secure": false,
+      "pathRewrite": {"^/api" : ""}
+    }
+  }
