@@ -18,7 +18,25 @@ export class ShowReplayComponent implements OnInit {
   routeId = "";
   userId: string | null = localStorage.getItem('currentUser');
 
-  replay: any = {};
+  replay: any;
+  replayDataLoaded: boolean = true;
+
+  votes: any;
+
+  showVotingUI : boolean = true;
+  dataLoaded = new Promise((resolve, reject) => {
+
+    console.log("Executing Promise...")
+
+    if (this.replayDataLoaded) {
+      resolve(true);
+    }
+    else {
+      resolve(false)
+    }
+    
+    
+  });
     
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
@@ -29,16 +47,16 @@ export class ShowReplayComponent implements OnInit {
       this.routeId = params['id'];
     });
 
-    
-
     console.log("routeId: " + this.routeId);
-
+  
+    
     this.getVideo(this.routeId).subscribe({
       next: (response) => {
         
         this.replay = response;
-        
-        startVideo(this.replay.Item.url);
+        this.votes = this.replay.Item.votes;
+
+        console.log("Got video details");
 
         //Enrich replay with the vote of the current user
         var vote: any = {};
@@ -49,12 +67,33 @@ export class ShowReplayComponent implements OnInit {
             vote = response;
             if (vote.Item) {
               this.replay.Item.overturn = vote.Item.overturn;
+              this.showVotingUI = false;
               console.log(vote);
             }
+
+            console.log("Got vote details");
             
           },
           error: (e) => console.error(e)
         })
+
+        this.replayDataLoaded = true;
+
+        //Update promise
+        this.dataLoaded
+          .then(
+            (success) => {
+              console.log("Promise Result: ", success)
+            })
+          .catch(
+            (error) => {
+              console.log("Promise Result: ", error)
+            }
+          )
+
+        //Start video
+        startVideo(this.replay.Item.url);
+        console.log("Started video")
       },
       error: (e) => console.error(e)
     }
@@ -78,11 +117,32 @@ export class ShowReplayComponent implements OnInit {
       "Access-Control-Allow-Methods": "*"
     });
 
-    const body = { userId: this.userId, overturn: overturn };
+    const body = { overturn: overturn };
 
     console.log("Casting vote...")
-    return this.http.put("https://lzj2wvtri3.execute-api.us-east-2.amazonaws.com/replays/" + this.routeId + "/vote", body, {headers: headers})
-        .subscribe();
+    this.http.put("https://lzj2wvtri3.execute-api.us-east-2.amazonaws.com/replays/" + this.routeId + "/votes/" + this.userId, body, {headers: headers}).subscribe();
+
+    console.log("Vote sucessfully cast");
+    this.showVotingUI = false;
+
+    this.updateVoteCount();
+
+    
+  }
+
+  updateVoteCount() {
+
+    this.getVideo(this.routeId).subscribe({
+      next: (response) => {
+        
+        this.replay = response;
+        this.votes = this.replay.Item.votes;
+
+      },
+      error: (e) => console.error(e)
+    }
+
+    )
   }
 
 }

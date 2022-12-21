@@ -14,13 +14,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { ListReplaysComponent } from './list-replays/list-replays.component';
 import { ShowReplayComponent } from './show-replay/show-replay.component';
 import { ReplayVoteStatsComponent } from './replay-vote-stats/replay-vote-stats.component';
+import { UserLoginComponent } from './user-login/user-login.component';
+import { UserLoginControlsComponent } from './user-login-controls/user-login-controls.component';
+import { VoteChartComponent } from './vote-chart/vote-chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListReplaysComponent,
     ShowReplayComponent,
-    ReplayVoteStatsComponent
+    ReplayVoteStatsComponent,
+    UserLoginComponent,
+    UserLoginControlsComponent,
+    VoteChartComponent
   ],
   imports: [
     BrowserModule,

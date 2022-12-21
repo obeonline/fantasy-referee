@@ -1,0 +1,7 @@
+<p>{{firstName}}</p>
+<div *ngIf="showMe">I want you to show and hide me</div>
+<div>Overturn : {{ votes.overturn }}</div>
+<div>Confirm : {{ votes.confirm }}</div>
+<button mat-raised-button color="primary" mat-button  (click)="updateName()">Update Name</button> - 
+<button mat-raised-button color="primary" mat-button  (click)="toggleDiv()">Hide Div</button> - 
+

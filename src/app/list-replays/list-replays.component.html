@@ -1,3 +1,10 @@
+<div style="text-align:center; padding-bottom:10pt">
+<img
+    alt="Advertisement"
+    src="/assets/images/amazon-ad.png"
+    style="max-width: 100%; height: auto;"
+  />
+</div>
 <!-- Cards with media area -->
 <div  *ngFor="let replay of replays.Items" style="padding-bottom: 15px;">
 <mat-card mat-elevation-z8>
@@ -10,12 +17,18 @@
     </mat-card-header>
     <mat-card-content style="text-align: center;">
         <div style="padding-bottom: 10px; text-align: left;">{{replay.description}}</div>
-        <div *ngIf="replay.overturn == null">
-            <button mat-raised-button color="primary" style="width: 95%;" [routerLink]="['/replays', replay.videoId]">Vote</button>
-        </div>
-        <div *ngIf="replay.overturn">
-            <button mat-stroked-button color="primary" style="width: 95%;" [routerLink]="['/replays', replay.videoId]">View Results</button>
-        </div>
+        <div *ngIf="true">
+            <div *ngIf="!componentReady">
+                Loading...
+            </div>
+            <div *ngIf="!replay.voted;then showVote else showView">here is ignored</div>
+                <ng-template #showVote>
+                    <button mat-raised-button color="primary" style="width: 95%;" [routerLink]="['/replays', replay.videoId]">Vote</button>
+                </ng-template>
+                <ng-template #showView>
+                    <button mat-stroked-button color="primary" style="width: 95%; background-color: #e5e5e5; color:black" [routerLink]="['/replays', replay.videoId]">View Results</button>
+                </ng-template>
+            </div>
     </mat-card-content>
 </mat-card>
 </div>

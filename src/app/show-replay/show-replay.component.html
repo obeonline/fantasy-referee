@@ -1,26 +1,36 @@
-<mat-card class="example-card">
-    <mat-card-header style="padding-bottom: 10px;">
-        <mat-card-title>{{ replay.Item.title }}</mat-card-title>
-        <mat-card-subtitle>{{ replay.Item.gameInfo }}</mat-card-subtitle>
-    </mat-card-header>
-    <video controls="true"></video>
-    <mat-card-content>
-        <p style="padding-top: 10px;">
-            {{ replay.Item.description }}
-        </p>
-    </mat-card-content>
-    <mat-card-actions>
-        <div  *ngIf="replay.Item.overturn == null">
-            <button mat-raised-button color="primary" mat-button style="background-color: green;" (click)="vote(false)">CONFIRM CALL</button>
-            &nbsp;
-            <button mat-raised-button color="primary" mat-button style="background-color:firebrick;" (click)="vote(true)">OVERTURN CALL</button>
+<div *ngIf="dataLoaded | async">
+    <mat-card class="example-card">
+        <mat-card-header style="padding-bottom: 10px;">
+            <mat-card-title>{{ replay.Item.title }}</mat-card-title>
+            <mat-card-subtitle>{{ replay.Item.gameInfo }}</mat-card-subtitle>
+        </mat-card-header>
+        <video controls="true"></video>
+        <mat-card-content>
+            <p style="padding-top: 15px;">
+                {{ replay.Item.description }}
+            </p>
+        </mat-card-content>
+        <div style="text-align: center; padding-top: 25px; padding-bottom: 10px;">
+            <div  *ngIf="showVotingUI" style="width:100%; text-align:center">
+                <span style="padding-right: 15px"><button mat-raised-button color="primary" mat-button style="background-color: green;" (click)="vote(false)">CONFIRM CALL</button></span>
+                
+                <button mat-raised-button color="primary" mat-button style="background-color:firebrick;" (click)="vote(true)">OVERTURN CALL</button>
+            </div>
+            <div  *ngIf="!showVotingUI">
+                <replay-vote-stats [votes]="votes"></replay-vote-stats>
+            </div>
         </div>
-        <div  *ngIf="replay.Item.overturn != null">
-            <replay-vote-stats></replay-vote-stats>
-        </div>
-    </mat-card-actions>
-</mat-card>
-
+        <mat-card-footer style="text-align:center">
+            <div style="padding-bottom:25px; padding-top: 5px;">
+                <button mat-stroked-button color="primary" style="width: 86%; background-color: #e5e5e5; color:black" [routerLink]="['/replays']">Back to Replays</button>
+            </div>
+            <div> </div>
+        </mat-card-footer>
+    </mat-card>
+</div>
+<div>
+    
+</div>
 
 
 
