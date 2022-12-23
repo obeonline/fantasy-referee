@@ -6,29 +6,28 @@
   />
 </div>
 <!-- Cards with media area -->
-<div  *ngFor="let replay of replays.Items" style="padding-bottom: 15px;">
-<mat-card mat-elevation-z8>
-    <mat-card-header>
-    <mat-card-title-group>
-        <mat-card-title>{{replay.title}}</mat-card-title>
-        <mat-card-subtitle>{{replay.gameInfo}}</mat-card-subtitle>
-        <img mat-card-sm-image src="{{replay.thumbnail}}" >
-    </mat-card-title-group>
-    </mat-card-header>
-    <mat-card-content style="text-align: center;">
-        <div style="padding-bottom: 10px; text-align: left;">{{replay.description}}</div>
-        <div *ngIf="true">
-            <div *ngIf="!componentReady">
-                Loading...
+<div *ngIf="isLoading">
+  Loading...
+</div>
+<div *ngIf="!isLoading">
+  <div  *ngFor="let replay of replays" style="padding-bottom: 15px;">
+  <mat-card mat-elevation-z8>
+      <mat-card-header>
+      <mat-card-title-group>
+          <mat-card-title>{{replay.title}}</mat-card-title>
+          <mat-card-subtitle>{{replay.gameInfo}}</mat-card-subtitle>
+          <img mat-card-sm-image src="{{replay.thumbnail}}" >
+      </mat-card-title-group>
+      </mat-card-header>
+      <mat-card-content style="text-align: center;">
+          <div style="padding-bottom: 10px; text-align: left;">{{replay.description}}</div>
+            <div *ngIf="!isLoading && replay.userVote! && !replay.userVote!.voted!">
+                <button mat-raised-button color="primary" style="width: 95%;" [routerLink]="['/replays', replay.id]">Vote</button>
             </div>
-            <div *ngIf="!replay.voted;then showVote else showView">here is ignored</div>
-                <ng-template #showVote>
-                    <button mat-raised-button color="primary" style="width: 95%;" [routerLink]="['/replays', replay.videoId]">Vote</button>
-                </ng-template>
-                <ng-template #showView>
-                    <button mat-stroked-button color="primary" style="width: 95%; background-color: #e5e5e5; color:black" [routerLink]="['/replays', replay.videoId]">View Results</button>
-                </ng-template>
+            <div *ngIf="!isLoading && replay.userVote! && replay.userVote!.voted!">
+                <button mat-stroked-button color="primary" style="width: 95%; background-color: #e5e5e5; color:black" [routerLink]="['/replays', replay.id]">View Results</button>
             </div>
-    </mat-card-content>
-</mat-card>
+      </mat-card-content>
+  </mat-card>
+  </div>
 </div>

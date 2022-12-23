@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Replay } from '../models/replay';
+import { ReplayService } from '../services/replay-service.service';
 
 @Component({
   selector: 'list-replays',
@@ -12,77 +14,63 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class ListReplaysComponent {
 
-  replays: any = {};
-  componentReady = false;
-  showVoteButton = false;
-  showViewButton = false;
-  showLoading = true;
+  replays: Replay[] = [];
+  showVoteButton = true;
+  isLoading = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private replayService: ReplayService) { }
 
   ngOnInit() {
-    this.getVideos().subscribe({
-      next: (response) => {
-        
-        this.replays = response;
 
-        //Enrich replays with the vote of the current user
-        this.replays.Items.forEach(replay => {
+    //Show Loading template
+    this.isLoading = true;
 
-          //Show loading and hide buttons
-          replay.ready = false;
+    const userId: string = localStorage.getItem('currentUser')!;
 
-          var vote: any;
-          var userId: string | null = localStorage.getItem('currentUser');
+    this.replayService.getReplays()
+      .pipe(map((replays => {
+        for (const key in replays) {
 
-          this.getVote(replay.videoId, userId).subscribe({
-            next: (response) => {
+          //Add the current user's vote to the current replay to display proper UI if the user has already voted
+          this.replayService.getUserVote(replays[key].id!, userId!)
+          .subscribe(vote => {
 
-              vote = response;
-              if (vote.Item) {
-                replay.overturn = vote.Item.overturn;
-                replay.voted = true;
-              } else {
-                replay.voted = false;
-              }
+            //console.log("Getting vote for: ", replays[key].id);
 
-              
-            },
-            error: (e) => console.error(e)
+            //Enrich Replay
+            if (vote.hasOwnProperty("Item")) {
+              //console.log("User has a vote...")
+              replays[key].userVote = {
+                voted: true,
+                overturn: vote["Item"].overturn
+              };
+            }
+            else {
+              //console.log("User did not vote...")
+
+              replays[key].userVote = {
+                voted: false,
+                overturn: null!
+              };
+            }
+            //console.log(vote);
+
           })
+        }
 
-          //Hide loading and show buttons
-          replay.ready = true;
+        return replays;
 
-        });
+      })))
+      .subscribe(replays => {
+
+        //this.replays = JSON.parse(JSON.stringify(replays!));
+        this.replays = replays!
 
         console.log(this.replays);
-        //console.log(this.replays.Items[0]);
 
-      },
-      error: (e) => console.error(e)
+        //Disable loading template
+        this.isLoading = false;
+
     })
-
-    //Show Items
-    this.componentReady = true;
-    
-  }
-
-  getVideos() {
-
-    const headers = new HttpHeaders({
-      "Access-Control-Allow-Origin": "*"
-    });
-
-    return this.http.get("https://lzj2wvtri3.execute-api.us-east-2.amazonaws.com/replays", {headers: headers})
-  }
-
-  getVote(videoId: string, userId: string | null) {
-
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json"
-    });
-
-    return this.http.get("https://lzj2wvtri3.execute-api.us-east-2.amazonaws.com/replays/" + videoId + "/votes/" + userId, {headers: headers});
   }
 }
