@@ -6,5 +6,7 @@ function startVideo(url) {
     video = document.querySelector('video');
     player = dashjs.MediaPlayer().create();
     player.initialize(video, url, true);
-    
+
+    console.log("Video Player Initialized...")
+
 }

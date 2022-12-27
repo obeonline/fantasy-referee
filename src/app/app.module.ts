@@ -17,6 +17,8 @@ import { ReplayVoteStatsComponent } from './replay-vote-stats/replay-vote-stats.
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserLoginControlsComponent } from './user-login-controls/user-login-controls.component';
 import { VoteChartComponent } from './vote-chart/vote-chart.component';
+import { ModelTestComponent } from './model-test/model-test.component';
+import { VideoTestComponent } from './video-test/video-test.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { VoteChartComponent } from './vote-chart/vote-chart.component';
     ReplayVoteStatsComponent,
     UserLoginComponent,
     UserLoginControlsComponent,
-    VoteChartComponent
+    VoteChartComponent,
+    ModelTestComponent,
+    VideoTestComponent
   ],
   imports: [
     BrowserModule,

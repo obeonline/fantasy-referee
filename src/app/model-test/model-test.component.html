@@ -1,0 +1,13 @@
+<p>model-test works!</p>
+<P *ngIf="isLoading">Loading...</P>
+<p *ngIf="!isLoading">Loaded</p>
+<div *ngIf="!isLoading">
+  {{replay.title}}
+</div>
+<div *ngIf="!isLoading">
+  Replay count: {{replays.length}}
+
+  <div *ngFor="let replay of replays">
+    Title {{replay.title}}
+  </div>
+</div>

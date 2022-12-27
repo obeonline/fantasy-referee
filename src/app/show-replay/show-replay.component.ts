@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Replay } from '../models/replay';
+import { ReplayService } from '../services/replay-service.service';
+import { map } from 'rxjs';
 
 // declare the javascript function here
 declare function startVideo(url: string): any;
@@ -15,134 +18,85 @@ declare function startVideo(url: string): any;
 @Injectable()
 export class ShowReplayComponent implements OnInit {
 
+  replay: Replay = {};
+  showVoteButton = true;
+  isLoading = false;
+
   routeId = "";
   userId: string | null = localStorage.getItem('currentUser');
 
-  replay: any;
-  replayDataLoaded: boolean = true;
-
-  votes: any;
-
-  showVotingUI : boolean = true;
-  dataLoaded = new Promise((resolve, reject) => {
-
-    console.log("Executing Promise...")
-
-    if (this.replayDataLoaded) {
-      resolve(true);
-    }
-    else {
-      resolve(false)
-    }
-    
-    
-  });
-    
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private replayService: ReplayService) { }
 
   ngOnInit() {
-
 
     this.route.params.subscribe(params => {
       this.routeId = params['id'];
     });
 
     console.log("routeId: " + this.routeId);
-  
-    
-    this.getVideo(this.routeId).subscribe({
-      next: (response) => {
-        
-        this.replay = response;
-        this.votes = this.replay.Item.votes;
 
-        console.log("Got video details");
+    this.isLoading = true;
+    this.replayService.getReplay(this.routeId)
+      .pipe(map((replay => {
 
-        //Enrich replay with the vote of the current user
-        var vote: any = {};
+        //Add the current user's vote to the current replay to display proper UI if the user has already voted
+        this.replayService.getUserVote(replay.id!, this.userId!)
+        .subscribe(vote => {
 
-        this.getVote(this.replay.Item.videoId, this.userId).subscribe({
-          next: (response) => {
+          //Enrich Replay
+          if (vote.hasOwnProperty("Item")) {
+            //console.log("User has a vote...")
+            replay.userVote = {
+              voted: true,
+              overturn: vote["Item"].overturn
+            };
+          }
+          else {
+            //console.log("User did not vote...")
 
-            vote = response;
-            if (vote.Item) {
-              this.replay.Item.overturn = vote.Item.overturn;
-              this.showVotingUI = false;
-              console.log(vote);
-            }
-
-            console.log("Got vote details");
-            
-          },
-          error: (e) => console.error(e)
+            replay.userVote = {
+              voted: false,
+              overturn: null!
+            };
+          }
+          //console.log(vote);
         })
 
-        this.replayDataLoaded = true;
+      return replay;
 
-        //Update promise
-        this.dataLoaded
-          .then(
-            (success) => {
-              console.log("Promise Result: ", success)
-            })
-          .catch(
-            (error) => {
-              console.log("Promise Result: ", error)
-            }
-          )
+    })))
+    .subscribe(replay => {
+      this.replay = replay!
 
-        //Start video
-        startVideo(this.replay.Item.url);
-        console.log("Started video")
-      },
-      error: (e) => console.error(e)
-    }
+      console.log(this.replay);
 
-    )
-  }
+      //Disable loading template
+      this.isLoading = false;
 
-  getVideo(videoId: string) {
-    return this.http.get("https://lzj2wvtri3.execute-api.us-east-2.amazonaws.com/replays/" + videoId);
-  }
+      //Start video
+      //startVideo(this.replay.url!);
+      console.log("Started video: ", this.replay.url)
 
-  getVote(videoId: string, userId: string | null) {
-    return this.http.get("https://lzj2wvtri3.execute-api.us-east-2.amazonaws.com/replays/" + videoId + "/votes/" + userId);
+    })
   }
 
   vote(overturn: boolean) {
 
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "*"
-    });
-
     const body = { overturn: overturn };
 
     console.log("Casting vote...")
-    this.http.put("https://lzj2wvtri3.execute-api.us-east-2.amazonaws.com/replays/" + this.routeId + "/votes/" + this.userId, body, {headers: headers}).subscribe();
+
+    this.replayService.castUserVote(this.replay.id!, this.userId!, overturn).subscribe(() => {
+      if (overturn) {
+        this.replay.votes!.overturn++
+      }
+      else {
+        this.replay.votes!.confirm++
+      }
+    })
 
     console.log("Vote sucessfully cast");
-    this.showVotingUI = false;
 
-    this.updateVoteCount();
-
-    
-  }
-
-  updateVoteCount() {
-
-    this.getVideo(this.routeId).subscribe({
-      next: (response) => {
-        
-        this.replay = response;
-        this.votes = this.replay.Item.votes;
-
-      },
-      error: (e) => console.error(e)
-    }
-
-    )
   }
 
 }
