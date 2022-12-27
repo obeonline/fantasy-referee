@@ -7,7 +7,7 @@ import { ReplayService } from '../services/replay-service.service';
 import { map } from 'rxjs';
 
 // declare the javascript function here
-declare function startVideo(url: string): any;
+//declare function startVideo(url: string): any;
 
 @Component({
   selector: 'show-replay',

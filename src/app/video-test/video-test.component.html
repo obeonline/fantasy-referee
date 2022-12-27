@@ -1,15 +1,39 @@
+<div>
+  <mat-card class="example-card">
+      <mat-card-header style="padding-bottom: 10px;">
+        <mat-card-title>{{ replay.title }}</mat-card-title>
+        <mat-card-subtitle>{{ replay.gameInfo }}</mat-card-subtitle>
+      </mat-card-header>
+      <video-js
+        class="vjs-fluid"
+        controls
+        preload="auto"
+        data-setup='{"responsive": true}'
+        >
+        <source src="https://d26ohwpktuh73o.cloudfront.net/replays/1ffaf455-97fe-41a6-9c20-265daa2de8d9/nfl.m3u8" type="application/x-mpegURL"/>
+        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+      </video-js>
+      <mat-card-content>
+          <p style="padding-top: 15px;">
+              Description
+          </p>
+      </mat-card-content>
+      <div style="text-align: center; padding-top: 25px; padding-bottom: 10px;">
+          <div  *ngIf="true" style="width:100%; text-align:center">
+              <span style="padding-right: 15px"><button mat-raised-button color="primary" mat-button style="background-color: green;" >CONFIRM CALL</button></span>
 
-<video
-    id="my-video"
-    class="video-js"
-    controls
-    preload="true"
-    data-setup="{}"
-  >
-    <source src="https://d26ohwpktuh73o.cloudfront.net/replays/1ffaf455-97fe-41a6-9c20-265daa2de8d9/nfl.m3u8" type="application/x-mpegURL"/>
-    <p class="vjs-no-js">
-      To view this video please enable JavaScript, and consider upgrading to a
-      web browser that
-      <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-    </p>
-  </video>
+              <button mat-raised-button color="primary" mat-button style="background-color:firebrick;" >OVERTURN CALL</button>
+          </div>
+          <div  *ngIf="false">
+              <replay-vote-stats></replay-vote-stats>
+          </div>
+      </div>
+      <mat-card-footer style="text-align:center">
+          <div style="padding-bottom:25px; padding-top: 5px;">
+              <button mat-stroked-button color="primary" style="width: 86%; background-color: #e5e5e5; color:black" [routerLink]="['/replays']">Back to Replays</button>
+          </div>
+          <div> </div>
+      </mat-card-footer>
+  </mat-card>
+</div>
+
