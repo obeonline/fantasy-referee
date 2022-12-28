@@ -43,7 +43,6 @@ import { VideoTestComponent } from './video-test/video-test.component';
     MatButtonModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

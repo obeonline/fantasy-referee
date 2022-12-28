@@ -13,7 +13,8 @@ const routes: Routes = [
   { path: 'replays/:id', component: ShowReplayComponent },
   { path: 'login', component: UserLoginComponent },
   { path: 'votes', component: VoteChartComponent },
-  { path: 'test', component: VideoTestComponent}
+  { path: 'test', component: VideoTestComponent},
+  { path: 'chart', component: VoteChartComponent}
 
 ];
 

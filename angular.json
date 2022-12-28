@@ -34,7 +34,8 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "src/assets/js/start-video.js"
+              "src/assets/js/start-video.js",
+              "src/assets/js/vote-chart.js"
             ]
           },
           "configurations": {

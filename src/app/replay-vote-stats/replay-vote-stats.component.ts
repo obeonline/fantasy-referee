@@ -14,5 +14,9 @@ export class ReplayVoteStatsComponent {
 
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
+  ngOnInit() {
+
+  }
+
 
 }

@@ -6,6 +6,7 @@
   <title>Video.js Sandbox - Responsive</title>
   <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" type="text/css">
   <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   <style type="text/css">
     body {
       margin: 0;
@@ -19,21 +20,50 @@
     player when it fills the width of its containing viewport.
   </p>
 
-  <video-js
-    class="vjs-fluid"
+  <video
+    class="video-js vjs-fluid"
     controls
     preload="auto"
     data-setup='{"responsive": true}'
     >
     <source src="https://d26ohwpktuh73o.cloudfront.net/replays/1ffaf455-97fe-41a6-9c20-265daa2de8d9/nfl.m3u8" type="application/x-mpegURL"/>
     <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-  </video-js>
+  </video>
 
   <script>
     //var vid = document.querySelector('video-js');
     //var player = videojs(vid, {responsive: true});
 
   </script>
+
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
 
 </body>
 </html>
