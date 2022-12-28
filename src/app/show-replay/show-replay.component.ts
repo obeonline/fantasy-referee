@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -7,7 +7,8 @@ import { ReplayService } from '../services/replay-service.service';
 import { map } from 'rxjs';
 
 // declare the javascript function here
-//declare function startVideo(url: string): any;
+declare function startVideo(url: string): any;
+declare function disposeVideoPlayer(): any;
 
 @Component({
   selector: 'show-replay',
@@ -16,7 +17,7 @@ import { map } from 'rxjs';
 })
 
 @Injectable()
-export class ShowReplayComponent implements OnInit {
+export class ShowReplayComponent implements OnInit, OnDestroy {
 
   replay: Replay = {};
   showVoteButton = true;
@@ -70,14 +71,19 @@ export class ShowReplayComponent implements OnInit {
 
       console.log(this.replay);
 
-      //Disable loading template
-      this.isLoading = false;
-
       //Start video
-      //startVideo(this.replay.url!);
+      startVideo(this.replay.url!);
       console.log("Started video: ", this.replay.url)
 
+      //Disable loading template
+      this.isLoading = false;
     })
+  }
+
+  ngOnDestroy() {
+    //Cleanup video player when component is destroyed
+
+    disposeVideoPlayer();
   }
 
   vote(overturn: boolean) {

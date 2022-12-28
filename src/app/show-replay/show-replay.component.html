@@ -9,12 +9,10 @@
             <mat-card-subtitle>{{ replay.gameInfo }}</mat-card-subtitle>
         </mat-card-header>
         <video
+          id="replay-player"
           class="video-js vjs-fluid"
           controls
-          preload="auto"
-          data-setup='{"responsive": true}'
           >
-          <source src="https://d26ohwpktuh73o.cloudfront.net/replays/1ffaf455-97fe-41a6-9c20-265daa2de8d9/nfl.m3u8" type="application/x-mpegURL"/>
           <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
         </video>
         <mat-card-content>

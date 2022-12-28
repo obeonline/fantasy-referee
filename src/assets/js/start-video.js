@@ -1,12 +1,25 @@
 function startVideo(url) {
 
-    var video,
-        player;
+  var options = {"responsive": true};
 
-    video = document.querySelector('video');
-    player = dashjs.MediaPlayer().create();
-    player.initialize(video, url, true);
+    var player = videojs('replay-player', options, function onPlayerReady() {
+    videojs.log('Your player is ready!');
 
-    console.log("Video Player Initialized...")
+    // In this context, `this` is the player that was created by Video.js.
+    this.playsinline(true);
+    this.src({
+      type: 'application/x-mpegURL',
+      src: url
+    });
 
+    this.play();
+  });
+
+}
+
+function disposeVideoPlayer() {
+  var player = videojs('replay-player');
+  player.dispose();
+
+  console.log("Disposed of video player.")
 }
