@@ -72,8 +72,8 @@ export class ShowReplayComponent implements OnInit, OnDestroy {
       console.log(this.replay);
 
       //Start video
-      startVideo(this.replay.url!);
-      console.log("Started video: ", this.replay.url)
+      //startVideo(this.replay.url!);
+      //console.log("Started video: ", this.replay.url)
 
       //Disable loading template
       this.isLoading = false;
