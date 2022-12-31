@@ -6,8 +6,19 @@
       "type": "npm",
       "script": "start",
       "isBackground": true,
+      "presentation": {
+        "focus": true,
+        "panel": "dedicated"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
       "problemMatcher": {
         "owner": "typescript",
+        "source": "ts",
+        "applyTo": "closedDocuments",
+
         "pattern": "$tsc",
         "background": {
           "activeOnStart": true,
@@ -15,9 +26,12 @@
             "regexp": "(.*?)"
           },
           "endsPattern": {
-            "regexp": "bundle generation complete"
+            "regexp": "Compiled |Failed to compile."
           }
         }
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
       }
     },
     {
