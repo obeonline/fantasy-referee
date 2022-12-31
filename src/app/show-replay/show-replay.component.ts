@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute} from '@angular/router';
 import { Replay } from '../models/replay';
 import { ReplayService } from '../services/replay-service.service';
 import { map } from 'rxjs';
@@ -20,15 +20,21 @@ declare function disposeVideoPlayer(): any;
 export class ShowReplayComponent implements OnInit, OnDestroy {
 
   replay: Replay = {};
-  showVoteButton = true;
-  isLoading = false;
+  showVoteButton: boolean;
+  isLoading: boolean;
 
   routeId = "";
   userId: string | null = localStorage.getItem('currentUser');
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private replayService: ReplayService) { }
+  @ViewChild('voteButtons', {static: false}) voteButtonsElement?: ElementRef;
+  @ViewChild('voteChart', {static: false}) voteChartElement?: ElementRef;
 
-  ngOnInit() {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private replayService: ReplayService) {
+    this.showVoteButton = true;
+    this.isLoading = true;
+   }
+
+  async ngOnInit() {
 
     this.route.params.subscribe(params => {
       this.routeId = params['id'];
@@ -51,6 +57,9 @@ export class ShowReplayComponent implements OnInit, OnDestroy {
               voted: true,
               overturn: vote["Item"].overturn
             };
+
+            this.showVoteButton = false;
+            this.voteChartElement?.nativeElement.setAttribute('class', 'visible');
           }
           else {
             //console.log("User did not vote...")
@@ -59,6 +68,9 @@ export class ShowReplayComponent implements OnInit, OnDestroy {
               voted: false,
               overturn: null!
             };
+
+            this.showVoteButton = true;
+            this.voteButtonsElement?.nativeElement.setAttribute('class', 'visible');
           }
           //console.log(vote);
         })
@@ -71,12 +83,15 @@ export class ShowReplayComponent implements OnInit, OnDestroy {
 
       console.log(this.replay);
 
+
       //Start video
-      //startVideo(this.replay.url!);
-      //console.log("Started video: ", this.replay.url)
+      startVideo(this.replay.url!);
+      console.log("Started video: ", this.replay.url)
 
       //Disable loading template
       this.isLoading = false;
+
+      console.log("HTTP requrst returned..")
     })
   }
 
@@ -84,6 +99,10 @@ export class ShowReplayComponent implements OnInit, OnDestroy {
     //Cleanup video player when component is destroyed
 
     disposeVideoPlayer();
+  }
+
+  loadComplete() {
+    return !this.isLoading;
   }
 
   vote(overturn: boolean) {
@@ -99,9 +118,10 @@ export class ShowReplayComponent implements OnInit, OnDestroy {
       else {
         this.replay.votes!.confirm++
       }
-    })
 
-    console.log("Vote sucessfully cast");
+      this.showVoteButton = false;
+      console.log("Vote sucessfully cast");
+    });
 
   }
 

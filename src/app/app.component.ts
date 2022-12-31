@@ -13,17 +13,21 @@ import { catchError, retry } from 'rxjs/operators';
 
 export class AppComponent {
 
+  constructor() {
+    console.log("Starting App...")
+  }
+
   ngOnInit() {
     const user = localStorage.getItem('currentUser');
 
     if (!user || user == "") {
       var uuid =  generateUUID();
       localStorage.setItem("currentUser", uuid)
-    
+
     }
     console.log("Current User: ", user)
   }
-}    
+}
 
 function generateUUID() { // Public Domain/MIT
   var d = new Date().getTime();//Timestamp
