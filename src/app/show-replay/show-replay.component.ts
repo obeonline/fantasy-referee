@@ -110,6 +110,7 @@ export class ShowReplayComponent implements OnInit, OnDestroy {
     const body = { overturn: overturn };
 
     console.log("Casting vote...")
+    this.voteButtonsElement?.nativeElement.setAttribute('class', 'hidden');
 
     this.replayService.castUserVote(this.replay.id!, this.userId!, overturn).subscribe(() => {
       if (overturn) {
@@ -119,7 +120,7 @@ export class ShowReplayComponent implements OnInit, OnDestroy {
         this.replay.votes!.confirm++
       }
 
-      this.showVoteButton = false;
+      this.voteChartElement?.nativeElement.setAttribute('class', 'visible');
       console.log("Vote sucessfully cast");
     });
 
