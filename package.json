@@ -1,12 +1,14 @@
 {
-  "name": "fantasy-umpire",
+  "name": "fantasy-referee",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.config.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:prod": "ng build --configuration production",
+    "test:headless": "ng test --watch=false --browsers=ChromeHeadless"
   },
   "private": true,
   "dependencies": {
@@ -20,7 +22,6 @@
     "@angular/platform-browser": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
-    "angular-dashjs-player": "^1.0.2",
     "chart.js": "^4.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

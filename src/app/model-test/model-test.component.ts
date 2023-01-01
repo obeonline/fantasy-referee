@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs';
 import { Replay } from '../models/replay';
-import { ReplayService } from '../services/replay-service.service';
+import { ReplayService } from '../services/replay.service';
 
 
 @Component({

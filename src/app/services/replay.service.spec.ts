@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ReplayServiceService } from './replay-service.service';
+import { ReplayService } from './replay.service';
 
 describe('ReplayServiceService', () => {
-  let service: ReplayServiceService;
+  let service: ReplayService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ReplayServiceService);
+    service = TestBed.inject(ReplayService);
   });
 
   it('should be created', () => {

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Replay } from '../models/replay';
-import { ReplayService } from '../services/replay-service.service';
+import { ReplayService } from '../services/replay.service';
 
 @Component({
   selector: 'list-replays',
