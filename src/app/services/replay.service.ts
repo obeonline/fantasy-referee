@@ -17,7 +17,7 @@ export class ReplayService {
       .pipe(map(rawResponse => {
 
         rawResponse["Item"].id = rawResponse["Item"].videoId;
-        delete rawResponse["Item"].videoId;
+        //delete rawResponse["Item"].videoId;
 
         return this.parseReplay(rawResponse["Item"]);
 

@@ -1,6 +1,9 @@
 video {
     width: 100%;
 }
-[hidden] {
+.hidden {
     display: none !important;
+}
+.visible {
+  display:inline;
 }
