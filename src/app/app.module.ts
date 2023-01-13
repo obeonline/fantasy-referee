@@ -19,6 +19,7 @@ import { UserLoginControlsComponent } from './user-login-controls/user-login-con
 import { VoteChartComponent } from './vote-chart/vote-chart.component';
 import { ModelTestComponent } from './model-test/model-test.component';
 import { VideoTestComponent } from './video-test/video-test.component';
+import { UserAuthComponent } from './user-auth/user-auth.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { VideoTestComponent } from './video-test/video-test.component';
     UserLoginControlsComponent,
     VoteChartComponent,
     ModelTestComponent,
-    VideoTestComponent
+    VideoTestComponent,
+    UserAuthComponent
   ],
   imports: [
     BrowserModule,

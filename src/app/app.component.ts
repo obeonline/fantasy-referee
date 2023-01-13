@@ -27,6 +27,10 @@ export class AppComponent {
     }
     console.log("Current User: ", user)
   }
+
+  onLoginClick() {
+    window.location.assign("https://fantasy-referee.auth.us-east-2.amazoncognito.com/login?client_id=1jn7mecov8bh4l68pp55add8eg&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:4200/auth");
+  }
 }
 
 function generateUUID() { // Public Domain/MIT
